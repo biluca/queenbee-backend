@@ -1,0 +1,1710 @@
+{
+	"info": {
+		"name": "QueenBee Backend API",
+		"description": "Complete API collection for QueenBee Backend - A Django REST Framework application for managing customers, appointments, authentication, and finances.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refresh_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "customer_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "appointment_type_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "appointment_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "order_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "order_type_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "payment_type_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "order_item_uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "order_item_line_uuid",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login", ""]
+						}
+					}
+				},
+				{
+					"name": "Token Refresh",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/token/refresh/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "token", "refresh", ""]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/logout/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "logout", ""]
+						}
+					}
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"newuser\",\n  \"email\": \"newuser@example.com\",\n  \"password\": \"securepassword123\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "register", ""]
+						}
+					}
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "profile", ""]
+						}
+					}
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"first_name\": \"John Updated\",\n  \"last_name\": \"Doe Updated\",\n  \"email\": \"john.updated@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile/update/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "profile", "update", ""]
+						}
+					}
+				},
+				{
+					"name": "Update User Profile (Partial)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"first_name\": \"Updated Name\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile/update/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "profile", "update", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "List All Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/customers/?search=&ordering=-created_at&is_active=true",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", ""],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search in first_name, last_name, nickname, email, phone"
+								},
+								{
+									"key": "ordering",
+									"value": "-created_at",
+									"description": "Order by: created_at, updated_at, first_name, last_name, email"
+								},
+								{
+									"key": "is_active",
+									"value": "true",
+									"description": "Filter by active status"
+								},
+								{
+									"key": "gender",
+									"value": "",
+									"description": "Filter by gender: male, female, other",
+									"disabled": true
+								},
+								{
+									"key": "address_country",
+									"value": "",
+									"description": "Filter by country",
+									"disabled": true
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"nickname\": \"Johnny\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"+1234567890\",\n  \"date_of_birth\": \"1990-05-15\",\n  \"gender\": \"male\",\n  \"address_street\": \"Main Street\",\n  \"address_number\": \"123\",\n  \"address_neighborhood\": \"Downtown\",\n  \"address_city\": \"New York\",\n  \"address_state\": \"NY\",\n  \"address_zip_code\": \"10001\",\n  \"address_country\": \"USA\",\n  \"preferences\": [\"whatsapp_news\", \"email_news\"],\n  \"tags\": [\"VIP\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/customers/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Customer by UUID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/customers/{{customer_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", "{{customer_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Update Customer (Full)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"first_name\": \"John Updated\",\n  \"last_name\": \"Doe Updated\",\n  \"nickname\": \"Johnny Updated\",\n  \"email\": \"john.updated@example.com\",\n  \"phone\": \"+1234567891\",\n  \"date_of_birth\": \"1990-05-15\",\n  \"gender\": \"male\",\n  \"address_street\": \"Updated Street\",\n  \"address_number\": \"456\",\n  \"address_neighborhood\": \"Uptown\",\n  \"address_city\": \"New York\",\n  \"address_state\": \"NY\",\n  \"address_zip_code\": \"10002\",\n  \"address_country\": \"USA\",\n  \"preferences\": [\"email_news\"],\n  \"tags\": [\"VIP\", \"Diabetic\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/customers/{{customer_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", "{{customer_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Update Customer (Partial)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nickname\": \"Updated Nickname\",\n  \"phone\": \"+1987654321\",\n  \"tags\": [\"VIP\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/customers/{{customer_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", "{{customer_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/customers/{{customer_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", "{{customer_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Active Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/customers/active/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", "active", ""]
+						}
+					}
+				},
+				{
+					"name": "Activate Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/customers/{{customer_uuid}}/activate/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", "{{customer_uuid}}", "activate", ""]
+						}
+					}
+				},
+				{
+					"name": "Deactivate Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/customers/{{customer_uuid}}/deactivate/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", "{{customer_uuid}}", "deactivate", ""]
+						}
+					}
+				},
+				{
+					"name": "Advanced Customer Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/customers/search_advanced/?name=John&location=New York&tags=VIP&preferences=whatsapp_news",
+							"host": ["{{base_url}}"],
+							"path": ["api", "customers", "search_advanced", ""],
+							"query": [
+								{
+									"key": "name",
+									"value": "John",
+									"description": "Search in first_name, last_name, nickname"
+								},
+								{
+									"key": "location",
+									"value": "New York",
+									"description": "Search in city, state, country"
+								},
+								{
+									"key": "tags",
+									"value": "VIP",
+									"description": "Comma-separated tags: VIP,Diabetic"
+								},
+								{
+									"key": "preferences",
+									"value": "whatsapp_news",
+									"description": "Comma-separated preferences: whatsapp_news,email_news"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Appointment Types",
+			"item": [
+				{
+					"name": "List All Appointment Types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointment-types/?search=&ordering=description",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointment-types", ""],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search in description"
+								},
+								{
+									"key": "ordering",
+									"value": "description",
+									"description": "Order by: created_at, updated_at, description"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Appointment Type",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Haircut\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointment-types/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointment-types", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Appointment Type by UUID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointment-types/{{appointment_type_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointment-types", "{{appointment_type_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Update Appointment Type (Full)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Hair Styling\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointment-types/{{appointment_type_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointment-types", "{{appointment_type_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Update Appointment Type (Partial)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Hair Cut & Style\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointment-types/{{appointment_type_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointment-types", "{{appointment_type_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Delete Appointment Type",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointment-types/{{appointment_type_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointment-types", "{{appointment_type_uuid}}", ""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "List All Appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointments/?search=&ordering=-start_time&status=scheduled",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", ""],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search in customer name, email, appointment type, notes"
+								},
+								{
+									"key": "ordering",
+									"value": "-start_time",
+									"description": "Order by: created_at, updated_at, start_time, end_time"
+								},
+								{
+									"key": "status",
+									"value": "scheduled",
+									"description": "Filter by status: scheduled, confirmed, cancelled"
+								},
+								{
+									"key": "appointment_type",
+									"value": "",
+									"description": "Filter by appointment type UUID",
+									"disabled": true
+								},
+								{
+									"key": "customer",
+									"value": "",
+									"description": "Filter by customer UUID",
+									"disabled": true
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"{{customer_uuid}}\",\n  \"appointment_type\": \"{{appointment_type_uuid}}\",\n  \"start_time\": \"2024-12-20T10:00:00Z\",\n  \"end_time\": \"2024-12-20T11:00:00Z\",\n  \"status\": \"scheduled\",\n  \"notes\": \"Customer requested specific styling\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointments/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Appointment by UUID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointments/{{appointment_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", "{{appointment_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Update Appointment (Full)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"{{customer_uuid}}\",\n  \"appointment_type\": \"{{appointment_type_uuid}}\",\n  \"start_time\": \"2024-12-20T14:00:00Z\",\n  \"end_time\": \"2024-12-20T15:30:00Z\",\n  \"status\": \"confirmed\",\n  \"notes\": \"Updated appointment with confirmed status\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointments/{{appointment_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", "{{appointment_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Update Appointment (Partial)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"confirmed\",\n  \"notes\": \"Customer confirmed via phone\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointments/{{appointment_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", "{{appointment_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Delete Appointment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointments/{{appointment_uuid}}/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", "{{appointment_uuid}}", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Today's Appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointments/today/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", "today", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Upcoming Appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointments/upcoming/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", "upcoming", ""]
+						}
+					}
+				},
+				{
+					"name": "Confirm Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointments/{{appointment_uuid}}/confirm/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", "{{appointment_uuid}}", "confirm", ""]
+						}
+					}
+				},
+				{
+					"name": "Cancel Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cancellation_reason\": \"Customer requested cancellation due to schedule conflict\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointments/{{appointment_uuid}}/cancel/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", "{{appointment_uuid}}", "cancel", ""]
+						}
+					}
+				},
+				{
+					"name": "Get Appointments by Customer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/appointments/by_customer/?customer_uuid={{customer_uuid}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "appointments", "by_customer", ""],
+							"query": [
+								{
+									"key": "customer_uuid",
+									"value": "{{customer_uuid}}",
+									"description": "Required: Customer UUID to filter appointments"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Finances",
+			"item": [
+				{
+					"name": "Order Types",
+					"item": [
+						{
+							"name": "List All Order Types",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-types/?search=&ordering=type",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-types", ""],
+									"query": [
+										{
+											"key": "search",
+											"value": "",
+											"description": "Search in type"
+										},
+										{
+											"key": "ordering",
+											"value": "type",
+											"description": "Order by: created_at, updated_at, type"
+										},
+										{
+											"key": "type",
+											"value": "",
+											"description": "Filter by type: Income, Expense",
+											"disabled": true
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Create Order Type",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"Income\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-types/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-types", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Order Type by UUID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-types/{{order_type_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-types", "{{order_type_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Order Type (Full)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"Expense\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-types/{{order_type_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-types", "{{order_type_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Order Type (Partial)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"Income\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-types/{{order_type_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-types", "{{order_type_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Delete Order Type",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-types/{{order_type_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-types", "{{order_type_uuid}}", ""]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Payment Types",
+					"item": [
+						{
+							"name": "List All Payment Types",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/payment-types/?search=&ordering=type",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "payment-types", ""],
+									"query": [
+										{
+											"key": "search",
+											"value": "",
+											"description": "Search in type"
+										},
+										{
+											"key": "ordering",
+											"value": "type",
+											"description": "Order by: created_at, updated_at, type"
+										},
+										{
+											"key": "type",
+											"value": "",
+											"description": "Filter by type: Cash, Credit Card, Debit Card, Exchange, Bank Slip, Pix",
+											"disabled": true
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Create Payment Type",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"Cash\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/payment-types/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "payment-types", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Payment Type by UUID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/payment-types/{{payment_type_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "payment-types", "{{payment_type_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Payment Type (Full)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"Credit Card\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/payment-types/{{payment_type_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "payment-types", "{{payment_type_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Payment Type (Partial)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"type\": \"Pix\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/payment-types/{{payment_type_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "payment-types", "{{payment_type_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Delete Payment Type",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/payment-types/{{payment_type_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "payment-types", "{{payment_type_uuid}}", ""]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Order Items",
+					"item": [
+						{
+							"name": "List All Order Items",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-items/?search=&ordering=description",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-items", ""],
+									"query": [
+										{
+											"key": "search",
+											"value": "",
+											"description": "Search in description"
+										},
+										{
+											"key": "ordering",
+											"value": "description",
+											"description": "Order by: created_at, updated_at, description, unit_price, inventory_quantity"
+										},
+										{
+											"key": "inventory_quantity",
+											"value": "",
+											"description": "Filter by inventory quantity",
+											"disabled": true
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Create Order Item",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"Hair Shampoo\",\n  \"inventory_quantity\": 50,\n  \"unit_price\": \"15.99\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-items/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-items", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Order Item by UUID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-items/{{order_item_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-items", "{{order_item_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Order Item (Full)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"description\": \"Premium Hair Shampoo\",\n  \"inventory_quantity\": 25,\n  \"unit_price\": \"18.99\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-items/{{order_item_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-items", "{{order_item_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Order Item (Partial)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"inventory_quantity\": 30,\n  \"unit_price\": \"16.99\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-items/{{order_item_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-items", "{{order_item_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Delete Order Item",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-items/{{order_item_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-items", "{{order_item_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Low Stock Items",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-items/low_stock/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-items", "low_stock", ""]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Order Item Lines",
+					"item": [
+						{
+							"name": "List All Order Item Lines",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-item-lines/?search=&ordering=-created_at",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-item-lines", ""],
+									"query": [
+										{
+											"key": "search",
+											"value": "",
+											"description": "Search in order_item description"
+										},
+										{
+											"key": "ordering",
+											"value": "-created_at",
+											"description": "Order by: created_at, updated_at, quantity, unit_price, total_price"
+										},
+										{
+											"key": "order",
+											"value": "",
+											"description": "Filter by order UUID",
+											"disabled": true
+										},
+										{
+											"key": "order_item",
+											"value": "",
+											"description": "Filter by order item UUID",
+											"disabled": true
+										},
+										{
+											"key": "quantity",
+											"value": "",
+											"description": "Filter by quantity",
+											"disabled": true
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Create Order Item Line",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"order\": \"{{order_uuid}}\",\n  \"order_item\": \"{{order_item_uuid}}\",\n  \"quantity\": 2,\n  \"unit_price\": \"15.99\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-item-lines/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-item-lines", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Order Item Line by UUID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-item-lines/{{order_item_line_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-item-lines", "{{order_item_line_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Order Item Line (Full)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"order\": \"{{order_uuid}}\",\n  \"order_item\": \"{{order_item_uuid}}\",\n  \"quantity\": 3,\n  \"unit_price\": \"15.99\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-item-lines/{{order_item_line_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-item-lines", "{{order_item_line_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Order Item Line (Partial)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"quantity\": 5\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-item-lines/{{order_item_line_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-item-lines", "{{order_item_line_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Delete Order Item Line",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/order-item-lines/{{order_item_line_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "order-item-lines", "{{order_item_line_uuid}}", ""]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Orders",
+					"item": [
+						{
+							"name": "List All Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/?search=&ordering=-created_at",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", ""],
+									"query": [
+										{
+											"key": "search",
+											"value": "",
+											"description": "Search customer name/email"
+										},
+										{
+											"key": "ordering",
+											"value": "-created_at",
+											"description": "Order by: created_at, updated_at, total"
+										},
+										{
+											"key": "order_type",
+											"value": "",
+											"description": "Filter by order type UUID",
+											"disabled": true
+										},
+										{
+											"key": "payment_type",
+											"value": "",
+											"description": "Filter by payment type UUID",
+											"disabled": true
+										},
+										{
+											"key": "customer",
+											"value": "",
+											"description": "Filter by customer UUID",
+											"disabled": true
+										},
+										{
+											"key": "appointment",
+											"value": "",
+											"description": "Filter by appointment UUID",
+											"disabled": true
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Create Order",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer\": \"{{customer_uuid}}\",\n  \"order_type\": \"{{order_type_uuid}}\",\n  \"payment_type\": \"{{payment_type_uuid}}\",\n  \"appointment\": \"{{appointment_uuid}}\",\n  \"total\": \"150.00\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Order by UUID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/{{order_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "{{order_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Order (Full)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer\": \"{{customer_uuid}}\",\n  \"order_type\": \"{{order_type_uuid}}\",\n  \"payment_type\": \"{{payment_type_uuid}}\",\n  \"appointment\": \"{{appointment_uuid}}\",\n  \"total\": \"200.00\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/{{order_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "{{order_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Update Order (Partial)",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"total\": \"175.00\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/{{order_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "{{order_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Delete Order",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/{{order_uuid}}/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "{{order_uuid}}", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Today's Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/today/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "today", ""]
+								}
+							}
+						},
+						{
+							"name": "Get This Month's Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/this_month/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "this_month", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Orders by Customer",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/by_customer/?customer_uuid={{customer_uuid}}",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "by_customer", ""],
+									"query": [
+										{
+											"key": "customer_uuid",
+											"value": "{{customer_uuid}}",
+											"description": "Required: Customer UUID to filter orders"
+										}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Income Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/income/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "income", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Expense Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/expense/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "expense", ""]
+								}
+							}
+						},
+						{
+							"name": "Create Order with Items",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer\": \"{{customer_uuid}}\",\n  \"order_type\": \"{{order_type_uuid}}\",\n  \"payment_type\": \"{{payment_type_uuid}}\",\n  \"appointment\": \"{{appointment_uuid}}\",\n  \"total\": \"150.00\",\n  \"order_items\": [\n    {\n      \"order_item\": \"{{order_item_uuid}}\",\n      \"quantity\": 2,\n      \"unit_price\": \"75.00\"\n    }\n  ]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/create_with_items/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "create_with_items", ""]
+								}
+							}
+						},
+						{
+							"name": "Get Order Statistics",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/finances/api/orders/statistics/",
+									"host": ["{{base_url}}"],
+									"path": ["finances", "api", "orders", "statistics", ""]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
