@@ -1,0 +1,71 @@
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: queenbee_db
+    environment:
+      POSTGRES_DB: queenbee_db
+      POSTGRES_USER: queenbee_user
+      POSTGRES_PASSWORD: queenbee_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - queenbee_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U queenbee_user -d queenbee_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Django Backend
+  backend:
+    build:
+      context: ./queenbee-backend
+      dockerfile: Dockerfile
+    container_name: queenbee_backend
+    environment:
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=queenbee_db
+      - DB_USER=queenbee_user
+      - DB_PASSWORD=queenbee_password
+      - SECRET_KEY=django-insecure-+iq#g5+39h(kdn^=ndd!j6e+3jw1b6_*fp9+2#lighb-#08tqx
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./queenbee-backend:/app
+      - static_volume:/app/staticfiles
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - queenbee_network
+    restart: unless-stopped
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./queenbee-frontend
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_API_URL=http://localhost:8000/api
+        - REACT_APP_FINANCES_API_URL=http://localhost:8000/finances/api
+    container_name: queenbee_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - queenbee_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  static_volume:
+
+networks:
+  queenbee_network:
+    driver: bridge
